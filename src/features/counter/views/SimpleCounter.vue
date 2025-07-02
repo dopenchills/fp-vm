@@ -31,7 +31,7 @@ button {
 </style>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref } from 'vue';
 import { decrement, increment, undo, type SimpleCounterData } from '../domain';
 import { load as loadWorkflow } from '../domain/workflow';
 import { simpleCounterApiEnv } from '../infra/api.env';
@@ -53,8 +53,4 @@ const load = () => withBusy(async () => {
 })
 
 onMounted(load)
-
-watch(isBusy, () => {
-  console.log(`isBusy: ${isBusy.value}`)
-})
 </script>
