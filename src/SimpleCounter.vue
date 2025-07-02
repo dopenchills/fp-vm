@@ -33,6 +33,7 @@ button {
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
 import { decrement, increment, undo, type SimpleCounterData } from './SimpleCounter.domain';
+import { load as loadWorkflow } from './SimpleCounter.domain.workflow';
 import { simpleCounterApiEnv } from './SimpleCounter.infra.api.env';
 import  { runBusy, type IsBusy } from './IsBusy';
 
@@ -44,7 +45,7 @@ const data = ref<SimpleCounterData>({
 const isBusy = ref<IsBusy>({ yes: false })
 
 const load = async () => runBusy(isBusy.value, async () => {
-  const result = await simpleCounterApiEnv.load()
+  const result = await loadWorkflow(simpleCounterApiEnv)
 
   if(!result.ok) {
     console.error(result.error)

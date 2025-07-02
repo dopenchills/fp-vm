@@ -6,7 +6,6 @@ export type PostCount = (count: Count) => Promise<Result<Count>>
 export type Load = () => Promise<Result<SimpleCounterData>>
 
 export type SimpleCounterApiEnv = {
-  load: Load
   getCount: GetCount
   postCount: PostCount
 }
