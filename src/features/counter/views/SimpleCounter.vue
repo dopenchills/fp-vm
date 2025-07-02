@@ -32,10 +32,10 @@ button {
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
-import { decrement, increment, undo, type SimpleCounterData } from './SimpleCounter.domain';
-import { load as loadWorkflow } from './SimpleCounter.domain.workflow';
-import { simpleCounterApiEnv } from './SimpleCounter.infra.api.env';
-import  { runBusy, type IsBusy } from './IsBusy';
+import { decrement, increment, undo, type SimpleCounterData } from '../domain';
+import { load as loadWorkflow } from '../domain/workflow';
+import { simpleCounterApiEnv } from '../infra/api.env';
+import  { runBusy, type IsBusy } from '../../../IsBusy';
 
 const data = ref<SimpleCounterData>({
   count: 0,

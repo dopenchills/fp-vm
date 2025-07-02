@@ -1,5 +1,5 @@
-import type { Result } from "./Result";
-import type { Count, SimpleCounterData } from "./SimpleCounter.domain";
+import type { Result } from "../../../shared/Result";
+import type { Count } from ".";
 
 export type GetCount = () => Promise<Result<Count>>
 export type PostCount = (count: Count) => Promise<Result<Count>>

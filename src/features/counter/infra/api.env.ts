@@ -1,6 +1,6 @@
-import type { SimpleCounterApiEnv } from "./SimpleCounter.domain.env"
-import { getCountA, postCountA } from "./SimpleCounter.infra.api.a"
-import { getCountB, postCountB } from "./SimpleCounter.infra.api.b"
+import type { SimpleCounterApiEnv } from "../domain/env"
+import { getCountA, postCountA } from "./api.a"
+import { getCountB, postCountB } from "./api.b"
 
 const simpleCounterApiAEnv: SimpleCounterApiEnv = {
   getCount: getCountA,

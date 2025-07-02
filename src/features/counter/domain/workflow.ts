@@ -1,6 +1,6 @@
-import { ok, type Result } from "./Result"
-import type { SimpleCounterData } from "./SimpleCounter.domain"
-import type { SimpleCounterApiEnv } from "./SimpleCounter.domain.env"
+import { ok, type Result } from "../../../shared/Result"
+import type { SimpleCounterData } from "."
+import type { SimpleCounterApiEnv } from "./env"
 
 export const load = async (env: SimpleCounterApiEnv): Promise<Result<SimpleCounterData>> => {
   const countResult = await env.getCount()
