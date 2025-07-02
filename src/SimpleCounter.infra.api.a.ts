@@ -1,6 +1,6 @@
 import { type Result, ok } from "./Result"
-import type { Count, SimpleCounterData } from "./SimpleCounter"
-import type { GetCount, Load, PostCount } from "./SimpleCounterApi.type"
+import type { Count, SimpleCounterData } from "./SimpleCounter.domain"
+import type { GetCount, Load, PostCount } from "./SimpleCounter.domain.env"
 
 let _count: Count = 0
 export const getCountA: GetCount = (): Promise<Result<Count>> => {

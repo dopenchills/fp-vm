@@ -10,8 +10,8 @@
         <button :disabled="isBusy.yes" @click="data = increment(data)">+</button>
         <button :disabled="isBusy.yes" @click="data = decrement(data)">-</button>
         <button :disabled="isBusy.yes" @click="data = undo(data)">undo</button>
-        <button :disabled="isBusy.yes" @click="runBusy(() => simpleCounterApiEnv.postCount(data.count), isBusy)">save count</button>
-        <button :disabled="isBusy.yes" @click="runBusy(load, isBusy)">load latest</button>
+        <button :disabled="isBusy.yes" @click="runBusy(isBusy, () => simpleCounterApiEnv.postCount(data.count))">save count</button>
+        <button :disabled="isBusy.yes" @click="runBusy(isBusy, load)">load latest</button>
       </div>
 
       <div v-if="isBusy.yes">
@@ -32,9 +32,9 @@ button {
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
-import { decrement, increment, undo, type SimpleCounterData } from './SimpleCounter';
-import { simpleCounterApiEnv } from './SimpleCounterApi.env';
-import  { busy, idle, runBusy, type IsBusy } from './IsBusy';
+import { decrement, increment, undo, type SimpleCounterData } from './SimpleCounter.domain';
+import { simpleCounterApiEnv } from './SimpleCounter.infra.api.env';
+import  { runBusy, type IsBusy } from './IsBusy';
 
 const data = ref<SimpleCounterData>({
   count: 0,
@@ -43,20 +43,16 @@ const data = ref<SimpleCounterData>({
 
 const isBusy = ref<IsBusy>({ yes: false })
 
-async function load(): Promise<void> {
-  isBusy.value = busy()
+const load = async () => runBusy(isBusy.value, async () => {
+  const result = await simpleCounterApiEnv.load()
 
-  const loadResult = await simpleCounterApiEnv.load()
-
-  if (!loadResult.ok) {
-    console.error(loadResult.error)
+  if(!result.ok) {
+    console.error(result.error)
     return
   }
 
-  data.value = loadResult.value
-
-  isBusy.value = idle()
-}
+  data.value = result.value
+})
 
 onMounted(load)
 
