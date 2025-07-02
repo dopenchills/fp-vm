@@ -1,4 +1,4 @@
-import { getCountA, loadA, postCountA } from "./SimpleCounterApi.A"
+import { getCountA, loadA, postCountA } from "./SimpleCounterApi.a"
 import type { GetCount, Load, PostCount } from "./SimpleCounterApi.type"
 
 type SimpleCounterApiEnv = {
