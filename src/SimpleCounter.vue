@@ -34,7 +34,7 @@ button {
 import { onMounted, ref, watch } from 'vue';
 import { decrement, increment, undo, type SimpleCounterData } from './SimpleCounter';
 import { simpleCounterApiEnv } from './SimpleCounterApi.env';
-import  { busy, idle, runBusy, type IsBusy } from './isBusy';
+import  { busy, idle, runBusy, type IsBusy } from './IsBusy';
 
 const data = ref<SimpleCounterData>({
   count: 0,
