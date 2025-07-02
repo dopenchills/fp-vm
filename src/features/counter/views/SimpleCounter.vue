@@ -10,8 +10,8 @@
         <button :disabled="isBusy.yes" @click="data = increment(data)">+</button>
         <button :disabled="isBusy.yes" @click="data = decrement(data)">-</button>
         <button :disabled="isBusy.yes" @click="data = undo(data)">undo</button>
-        <button :disabled="isBusy.yes" @click="runBusy(isBusy, () => simpleCounterApiEnv.postCount(data.count))">save count</button>
-        <button :disabled="isBusy.yes" @click="runBusy(isBusy, load)">load latest</button>
+        <button :disabled="isBusy.yes" @click="runBusy(() => simpleCounterApiEnv.postCount(data.count))">save count</button>
+        <button :disabled="isBusy.yes" @click="runBusy(load)">load latest</button>
       </div>
 
       <div v-if="isBusy.yes">
@@ -35,16 +35,16 @@ import { onMounted, ref, watch } from 'vue';
 import { decrement, increment, undo, type SimpleCounterData } from '../domain';
 import { load as loadWorkflow } from '../domain/workflow';
 import { simpleCounterApiEnv } from '../infra/api.env';
-import  { runBusy, type IsBusy } from '../../../IsBusy';
+import { useBusy } from '../../../shared/views/composables/useIsBusy';
 
 const data = ref<SimpleCounterData>({
   count: 0,
   history: []
 })
 
-const isBusy = ref<IsBusy>({ yes: false })
+const { isBusy, runBusy } = useBusy()
 
-const load = () => runBusy(isBusy.value, async () => {
+const load = () => runBusy(async () => {
   const result = await loadWorkflow(simpleCounterApiEnv);
   return result.match({
     ok: (value_1) => data.value = value_1,
