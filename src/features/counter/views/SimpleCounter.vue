@@ -44,15 +44,12 @@ const data = ref<SimpleCounterData>({
 
 const isBusy = ref<IsBusy>({ yes: false })
 
-const load = async () => runBusy(isBusy.value, async () => {
-  const result = await loadWorkflow(simpleCounterApiEnv)
-
-  if(!result.ok) {
-    console.error(result.error)
-    return
-  }
-
-  data.value = result.value
+const load = () => runBusy(isBusy.value, async () => {
+  const result = await loadWorkflow(simpleCounterApiEnv);
+  return result.match({
+    ok: (value_1) => data.value = value_1,
+    err: console.error
+  });
 })
 
 onMounted(load)
