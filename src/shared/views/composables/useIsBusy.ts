@@ -1,23 +1,13 @@
-import { ref, type Ref } from 'vue'
-
-export type IsBusy = { yes: boolean }
-
-export const busy = (): IsBusy => ({ yes: true })
-export const idle = (): IsBusy => ({ yes: false })
-export const runBusy = async (isBusy: IsBusy, process: (() => Promise<any>)): Promise<void> => {
-  isBusy.yes = true
-  await process()
-  isBusy.yes = false
-}
+import { ref } from 'vue'
 
 export const useBusy = () => {
-  const isBusy = ref<IsBusy>({ yes: false })
+  const isBusy = ref(false)
   
-  const runBusy = async (process: () => Promise<any>): Promise<void> => {
-    isBusy.value.yes = true
+  const withBusy = async (process: () => Promise<any>): Promise<void> => {
+    isBusy.value = true
     await process()
-    isBusy.value.yes = false
+    isBusy.value = false
   }
   
-  return { isBusy, runBusy }
+  return { isBusy, withBusy }
 }

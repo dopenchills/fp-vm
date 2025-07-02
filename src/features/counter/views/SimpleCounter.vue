@@ -1,20 +1,20 @@
 <template>
   <div>
     <div style="display: flex; flex-direction: column; gap: 24px;">
-      <div v-if="isBusy.yes">
+      <div v-if="isBusy">
         loading...
       </div>
       <div v-else>{{ data.count }}</div>
 
       <div style="display: flex; flex-direction: row; gap: 16px;">
-        <button :disabled="isBusy.yes" @click="data = increment(data)">+</button>
-        <button :disabled="isBusy.yes" @click="data = decrement(data)">-</button>
-        <button :disabled="isBusy.yes" @click="data = undo(data)">undo</button>
-        <button :disabled="isBusy.yes" @click="runBusy(() => simpleCounterApiEnv.postCount(data.count))">save count</button>
-        <button :disabled="isBusy.yes" @click="runBusy(load)">load latest</button>
+        <button :disabled="isBusy" @click="data = increment(data)">+</button>
+        <button :disabled="isBusy" @click="data = decrement(data)">-</button>
+        <button :disabled="isBusy" @click="data = undo(data)">undo</button>
+        <button :disabled="isBusy" @click="withBusy(() => simpleCounterApiEnv.postCount(data.count))">save count</button>
+        <button :disabled="isBusy" @click="withBusy(load)">load latest</button>
       </div>
 
-      <div v-if="isBusy.yes">
+      <div v-if="isBusy">
         loading...
       </div>
       <div v-else>
@@ -42,9 +42,9 @@ const data = ref<SimpleCounterData>({
   history: []
 })
 
-const { isBusy, runBusy } = useBusy()
+const { isBusy, withBusy } = useBusy()
 
-const load = () => runBusy(async () => {
+const load = () => withBusy(async () => {
   const result = await loadWorkflow(simpleCounterApiEnv);
   return result.match({
     ok: (value_1) => data.value = value_1,
@@ -55,6 +55,6 @@ const load = () => runBusy(async () => {
 onMounted(load)
 
 watch(isBusy, () => {
-  console.log(`isBusy: ${isBusy.value.yes}`)
+  console.log(`isBusy: ${isBusy.value}`)
 })
 </script>
