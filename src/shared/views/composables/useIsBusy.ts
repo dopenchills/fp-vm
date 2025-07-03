@@ -5,8 +5,11 @@ export const useBusy = () => {
   
   const withBusy = async (process: () => Promise<any>): Promise<void> => {
     isBusy.value = true
-    await process()
-    isBusy.value = false
+    try {
+      await process()
+    } finally {
+      isBusy.value = false
+    }
   }
   
   return { isBusy, withBusy }
