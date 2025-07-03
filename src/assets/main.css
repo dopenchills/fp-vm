@@ -4,3 +4,13 @@
   margin: 0;
   padding: 0;
 }
+
+/* Prevent double-tap zoom on mobile */
+button, input, select, textarea {
+  touch-action: manipulation;
+}
+
+/* Additional prevention for any interactive elements */
+[onclick], [role="button"] {
+  touch-action: manipulation;
+}
