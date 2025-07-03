@@ -13,4 +13,4 @@ const simpleCounterApiBEnv: SimpleCounterApiEnv = {
 }
 
 // TODO: change SimpleCounterApiEnv depending on process.env
-export const simpleCounterApiEnv: SimpleCounterApiEnv = simpleCounterApiAEnv
+export const simpleCounterApiEnv: SimpleCounterApiEnv = simpleCounterApiBEnv
