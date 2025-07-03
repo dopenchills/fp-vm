@@ -7,7 +7,7 @@ export const getCountA: GetCount = (): Promise<Result<Count>> => {
   return new Promise((resolve, _reject) => {
     setTimeout(() => {
       resolve(ok(_count))
-    }, 3_000)
+    }, 1_000)
   })
 }
 
@@ -17,6 +17,6 @@ export const postCountA: PostCount = (count: Count): Promise<Result<Count>> => {
   return new Promise((resolve, _reject) => {
     setTimeout(() => {
       resolve(ok(count))
-    }, 3_000)
+    }, 1_000)
   })
 }
