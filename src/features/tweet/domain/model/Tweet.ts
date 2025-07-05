@@ -8,7 +8,7 @@ export type Tweet = {
 const maxLength = 140
 
 export const tweet = (value: { content: string }): Result<Tweet, string> => {
-  if (value.content.length === 0) {
+  if (value.content.trim().length === 0) {
     return err('Tweet something')
   }
 
