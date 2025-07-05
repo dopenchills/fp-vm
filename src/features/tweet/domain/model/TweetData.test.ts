@@ -212,12 +212,12 @@ describe('TweetData', () => {
       expect(result.tweets).toEqual([])
     })
 
-    it('should handle whitespace-only content as valid', () => {
+    it('should handle whitespace-only content as invalid', () => {
       const whitespaceContent = '   '
       const result = updateInputValue(initialTweetData, whitespaceContent)
       
       expect(result.inputValue).toBe(whitespaceContent)
-      expect(result.errorMessage).toBe('')
+      expect(result.errorMessage).toBe('Tweet something')
       expect(result.tweets).toEqual([])
     })
 

@@ -82,14 +82,14 @@ describe('Tweet', () => {
       }
     })
 
-    it('should handle whitespace-only content as valid', () => {
+    it('should handle whitespace-only content as invalid', () => {
       const content = '   '
       const result = tweet({ content })
       
-      expect(result.ok).toBe(true)
+      expect(result.ok).toBe(false)
       
-      if (result.ok) {
-        expect(result.value.content).toBe(content)
+      if (!result.ok) {
+        expect(result.error).toBe('Tweet something')
       }
     })
 
