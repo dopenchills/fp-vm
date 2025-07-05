@@ -43,7 +43,7 @@ export const undo = (data: SimpleCounterData): SimpleCounterData => {
   const latestCommand = data.history[data.history.length - 1].command
 
   const newHistory = data.history.slice(0, -1)
-  const previousCount = latestCommand === '+' ? data.count -1 : data.count + 1
+  const previousCount = latestCommand === '+' ? data.count - 1 : data.count + 1
 
   return {
     count: previousCount,

@@ -73,11 +73,11 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watchEffect } from 'vue';
+import { onMounted, ref } from 'vue';
 import { load as loadWorkflow } from '../domain/workflow/workflow';
 import { tweetApiEnv } from '../infra/api.env';
 import { useBusy } from '../../../shared/views/composables/useIsBusy';
-import { addTweet, deleteTweet, updateInputValue, type TweetData } from '../domain/model/Tweets';
+import { addTweet, deleteTweet, updateInputValue, type TweetData } from '../domain/model/TweetData';
 import { tweet } from '../domain/model/Tweet';
 
 const data = ref<TweetData>({
@@ -85,7 +85,6 @@ const data = ref<TweetData>({
   inputValue: '',
   errorMessage: ''
 });
-watchEffect(() => console.log(data.value))
 
 const { isBusy, withBusy } = useBusy();
 const isComposing = ref(false);
