@@ -100,17 +100,25 @@ onMounted(() => withBusy(async () => {
   });
 }));
 
-const handleSubmit = async () => 
-  tweet({ content: data.value.inputValue })
-    .map(tweet => withBusy(async () => await tweetApiEnv.postTweet(tweet)))
-    .match({
-      err: console.error,
-      ok: tweet => tweet
-        .then(tweet => tweet.match({
-          err: console.error,
-          ok: tweet => data.value = addTweet(data.value, tweet)
-        }))
-    })
+const handleSubmit = async () => {
+  const tweetResult = tweet({ content: data.value.inputValue })
+  
+  return tweetResult.match({
+    err: console.error,
+    ok: async (tweetData) => {
+      const apiResult = await withBusy(async () => 
+        await tweetApiEnv.postTweet(tweetData)
+      )
+      
+      return apiResult.match({
+        err: console.error,
+        ok: (newTweet) => {
+          data.value = addTweet(data.value, newTweet)
+        }
+      })
+    }
+  })
+}
 
 const handleDeleteTweet = async (id: string) => {
   await withBusy(async () => 
