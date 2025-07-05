@@ -6,7 +6,7 @@
       <div class="flex flex-col gap-2">
         <div class="relative">
           <textarea
-            :model-value="data.inputValue"
+            :value="data.inputValue"
             @input="event => data = updateInputValue(data, (event.target as HTMLInputElement).value)"
             @keydown.enter.prevent="handleSubmit"
             :disabled="isBusy"
@@ -71,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watchEffect } from 'vue';
+import { onMounted, ref, watchEffect } from 'vue';
 import { load as loadWorkflow } from '../domain/workflow/workflow';
 import { tweetApiEnv } from '../infra/api.env';
 import { useBusy } from '../../../shared/views/composables/useIsBusy';
