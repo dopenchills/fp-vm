@@ -7,7 +7,7 @@ export type History = {
 }
 
 export type SimpleCounterData = {
-  count: number
+  count: Count
   history: History[]
 }
 
