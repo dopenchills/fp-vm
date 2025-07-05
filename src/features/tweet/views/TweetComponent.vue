@@ -8,7 +8,9 @@
           <textarea
             :value="data.inputValue"
             @input="event => data = updateInputValue(data, (event.target as HTMLInputElement).value)"
-            @keydown.enter.prevent="handleSubmit"
+            @keydown.enter.prevent="!isComposing && handleSubmit()"
+            @compositionstart="isComposing = true"
+            @compositionend="isComposing = false"
             :disabled="isBusy"
             placeholder="What's happening?"
             class="w-full p-8 text-2xl font-light text-gray-900 bg-white border-2 border-gray-200 rounded-3xl resize-none focus:outline-none focus:border-gray-400 disabled:bg-gray-50 transition-all duration-300 shadow-sm"
@@ -86,6 +88,7 @@ const data = ref<TweetData>({
 watchEffect(() => console.log(data.value))
 
 const { isBusy, withBusy } = useBusy();
+const isComposing = ref(false);
 
 onMounted(() => withBusy(async () => {
   const result = await loadWorkflow(tweetApiEnv);
