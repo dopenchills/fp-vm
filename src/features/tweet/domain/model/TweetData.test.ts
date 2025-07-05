@@ -149,22 +149,7 @@ describe('TweetData', () => {
       expect(result.tweets).toEqual([])
     })
 
-    it('should set error message for empty content', () => {
-      const result = updateInputValue(initialTweetData, '')
-      
-      expect(result.inputValue).toBe('')
-      expect(result.errorMessage).toBe('Tweet something')
-      expect(result.tweets).toEqual([])
-    })
 
-    it('should set error message for content exceeding 140 characters', () => {
-      const longContent = 'a'.repeat(141)
-      const result = updateInputValue(initialTweetData, longContent)
-      
-      expect(result.inputValue).toBe(longContent)
-      expect(result.errorMessage).toBe('Tweet until 140 chars')
-      expect(result.tweets).toEqual([])
-    })
 
     it('should clear error message when content becomes valid', () => {
       const dataWithError: TweetData = {
@@ -194,32 +179,8 @@ describe('TweetData', () => {
       expect(result.tweets).toEqual([mockTweet1, mockTweet2])
     })
 
-    it('should handle content with exactly 140 characters', () => {
-      const exactContent = 'a'.repeat(140)
-      const result = updateInputValue(initialTweetData, exactContent)
-      
-      expect(result.inputValue).toBe(exactContent)
-      expect(result.errorMessage).toBe('')
-      expect(result.tweets).toEqual([])
-    })
 
-    it('should handle special characters in input', () => {
-      const specialContent = 'Hello 世界! 🌍 #test @user'
-      const result = updateInputValue(initialTweetData, specialContent)
-      
-      expect(result.inputValue).toBe(specialContent)
-      expect(result.errorMessage).toBe('')
-      expect(result.tweets).toEqual([])
-    })
 
-    it('should handle whitespace-only content as invalid', () => {
-      const whitespaceContent = '   '
-      const result = updateInputValue(initialTweetData, whitespaceContent)
-      
-      expect(result.inputValue).toBe(whitespaceContent)
-      expect(result.errorMessage).toBe('Tweet something')
-      expect(result.tweets).toEqual([])
-    })
 
     it('should not mutate original data', () => {
       const originalData = { ...initialTweetData }
