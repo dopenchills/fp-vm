@@ -1,6 +1,7 @@
 import { err, ok, type Result } from "src/shared/Result"
 
 export type Tweet = {
+  id: string
   content: string
 }
 
@@ -15,5 +16,8 @@ export const tweet = (value: { content: string }): Result<Tweet, string> => {
     return err('Tweet until 140 chars')
   }
 
-  return ok(value)
+  return ok({
+    ...value, 
+    id: Math.random().toString()
+  })
 }
