@@ -43,7 +43,13 @@
           </button>
           <button 
             :disabled="isBusy" 
-            @click="withBusy(() => simpleCounterApiEnv.postCount(data.count))"
+            @click="withBusy(async () => {
+              const result = await simpleCounterApiEnv.postCount(data.count);
+              return result.match({
+                ok: () => {},
+                err: publishError
+              });
+            })"
             class="flex-1 h-10 bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 text-gray-700 rounded-full transition-colors"
           >
             Save
@@ -70,6 +76,7 @@ import { decrement, increment, undo, type SimpleCounterData } from '../domain';
 import { load as loadWorkflow } from '../domain/workflow';
 import { simpleCounterApiEnv } from '../infra/api.env';
 import { useBusy } from '../../../shared/views/composables/useIsBusy';
+import { publishError } from 'src/shared/error/views/publishError';
 
 const data = ref<SimpleCounterData>({
   count: 0,
@@ -82,7 +89,7 @@ const load = () => withBusy(async () => {
   const result = await loadWorkflow(simpleCounterApiEnv);
   return result.match({
     ok: (value_1) => data.value = value_1,
-    err: console.error
+    err: publishError
   });
 })
 

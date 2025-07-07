@@ -79,6 +79,8 @@ import { tweetApiEnv } from '../infra/api.env';
 import { useBusy } from '../../../shared/views/composables/useIsBusy';
 import { addTweet, deleteTweet, updateInputValue, type TweetData } from '../domain/model/TweetData';
 import { tweet } from '../domain/model/Tweet';
+import { publishError } from 'src/shared/error/views/publishError';
+import { unexpectedError } from 'src/shared/error/model/DomainError';
 
 const data = ref<TweetData>({
   tweets: [],
@@ -93,7 +95,7 @@ onMounted(() => withBusy(async () => {
   const result = await loadWorkflow(tweetApiEnv);
 
   return result.match({
-    err: console.error,
+    err: publishError,
     ok: (value) => {
       data.value = value;
     },
@@ -104,14 +106,14 @@ const handleSubmit = async () => {
   const tweetResult = tweet({ content: data.value.inputValue })
   
   return tweetResult.match({
-    err: console.error,
+    err: async (validationErrors) => publishError(unexpectedError(`unexpected validation errors: ${validationErrors}`)),
     ok: async (tweetData) => {
       const apiResult = await withBusy(async () => 
         await tweetApiEnv.postTweet(tweetData)
       )
       
       return apiResult.match({
-        err: console.error,
+        err: publishError,
         ok: (newTweet) => {
           data.value = addTweet(data.value, newTweet)
         }
@@ -123,10 +125,12 @@ const handleSubmit = async () => {
 const handleDeleteTweet = async (id: string) => {
   await withBusy(async () => 
     tweetApiEnv.deleteTweet(id)
-      .then(() =>
-        data.value = deleteTweet(data.value, id)
+      .then((result) =>
+        result.match({
+          ok: () => { data.value = deleteTweet(data.value, id) },
+          err: publishError
+        })
       )
-      .catch(console.error)
   );
 };
 </script>
