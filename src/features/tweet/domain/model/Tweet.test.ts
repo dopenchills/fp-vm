@@ -22,7 +22,7 @@ describe('Tweet', () => {
       expect(result.ok).toBe(false)
       
       if (!result.ok) {
-        expect(result.error).toBe('Tweet something')
+        expect(result.error.at(0)?.message).toBe('Tweet something')
       }
     })
 
@@ -33,7 +33,7 @@ describe('Tweet', () => {
       expect(result.ok).toBe(false)
       
       if (!result.ok) {
-        expect(result.error).toBe('Tweet until 140 chars')
+        expect(result.error.at(0)?.message).toBe('Tweet until 140 chars')
       }
     })
 
@@ -89,7 +89,7 @@ describe('Tweet', () => {
       expect(result.ok).toBe(false)
       
       if (!result.ok) {
-        expect(result.error).toBe('Tweet something')
+        expect(result.error.at(0)?.message).toBe('Tweet something')
       }
     })
 

@@ -17,7 +17,7 @@ export const updateInputValue = (data: TweetData, inputValue: string): TweetData
   inputValue,
   errorMessage: tweet({ content: inputValue }).match({
     ok: () => '',
-    err: (message) => message
+    err: (validationErrors) => validationErrors.at(0)?.message ?? ''
   })
 })
 

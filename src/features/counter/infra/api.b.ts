@@ -1,4 +1,5 @@
 import { type Result, ok } from "../../../shared/Result"
+import type { DomainError } from "../../../shared/error/model/DomainError"
 import type { Count } from "../domain"
 import type { GetCount, PostCount } from "../domain/env"
 
@@ -13,7 +14,7 @@ const saveCountToStorage = (count: Count): void => {
   localStorage.setItem(STORAGE_KEY, count.toString())
 }
 
-export const getCountB: GetCount = (): Promise<Result<Count>> => {
+export const getCountB: GetCount = (): Promise<Result<Count, DomainError>> => {
   return new Promise((resolve, _reject) => {
     setTimeout(() => {
       const count = getCountFromStorage()
@@ -22,7 +23,7 @@ export const getCountB: GetCount = (): Promise<Result<Count>> => {
   })
 }
 
-export const postCountB: PostCount = (count: Count): Promise<Result<Count>> => {
+export const postCountB: PostCount = (count: Count): Promise<Result<Count, DomainError>> => {
   saveCountToStorage(count)
 
   return new Promise((resolve, _reject) => {
