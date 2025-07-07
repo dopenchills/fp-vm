@@ -13,9 +13,13 @@ const props = defineProps<{
   errorAction?: ErrorAction
 }>()
 
-const dialogProps = computed<{ modelValue: true, message: string, buttonActions: ButtonAction[] } | undefined>(() => {
+const dialogProps = computed(() => {
   if (props.errorAction?.type !== ErrorActionTypeMap.Dialog) {
-    return
+    return {
+      modelValue: false,
+      message: '',
+      buttonActions: []
+    }
   }
 
   return {
