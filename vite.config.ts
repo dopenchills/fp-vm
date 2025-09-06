@@ -6,9 +6,8 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
-export default defineConfig(({ mode }) => ({
-  // Use GitHub Pages base path only when building for Pages
-  base: mode === 'gh-pages' ? '/fp-vm/' : '/',
+export default defineConfig({
+  base: '/fp-vm/',
   plugins: [
     vue(),
     vueDevTools(),
@@ -19,4 +18,4 @@ export default defineConfig(({ mode }) => ({
       'src': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
-}))
+})
